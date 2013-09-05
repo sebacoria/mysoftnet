@@ -4,7 +4,7 @@ package org.mysoftnet.t.model;
 import javax.persistence.*;
 
 /**
- * Java model for the Force.com MyEntity__c object.
+ * Java model for the Force.com Circuit__c object.
  *
  * For this class, the following operations are available
  * via Force.com JPA:
@@ -20,16 +20,18 @@ import javax.persistence.*;
  * @author mysoftnet (sebastian.a.coria@gmail.com)
  **/
 @javax.annotation.Generated(value="com.force.sdk.codegen.ForceJPAClassGenerator")
-@Table(name="MyEntity__c")
-@Entity(name="MyEntity")
+@Table(name="Circuit__c")
+@Entity(name="Circuit")
 @com.force.sdk.jpa.annotation.CustomObject(readOnlySchema=true)
-public class MyEntity extends com.force.sdk.jpa.model.BaseForceCustomObject {
+public class Circuit extends com.force.sdk.jpa.model.BaseForceCustomObject {
 
-    public static final String KEY_PREFIX = "a00";
+    public static final String KEY_PREFIX = "a01";
 
 
     protected User createdBy;
     protected User lastModifiedBy;
+    protected double number;
+    protected String part;
     
 
     @ManyToOne
@@ -54,7 +56,28 @@ public class MyEntity extends com.force.sdk.jpa.model.BaseForceCustomObject {
         this.lastModifiedBy = lastModifiedBy;
     }
     
+    @Column(name="Number__c")
+    public double getNumber() {
+        return this.number;
+    }
     
+    @Basic(optional=false)
+    public void setNumber(double number) {
+        this.number = number;
+    }
+    
+    @Column(name="Part__c")
+    public String getPart() {
+        return this.part;
+    }
+    
+    public void setPart(String part) {
+        this.part = part;
+    }
+    
+    
+
+
 
 
 

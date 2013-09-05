@@ -4,7 +4,7 @@ package org.mysoftnet.t.model;
 import javax.persistence.*;
 
 /**
- * Java model for the Force.com MyEntity__c object.
+ * Java model for the Force.com Congregation__c object.
  *
  * For this class, the following operations are available
  * via Force.com JPA:
@@ -20,16 +20,18 @@ import javax.persistence.*;
  * @author mysoftnet (sebastian.a.coria@gmail.com)
  **/
 @javax.annotation.Generated(value="com.force.sdk.codegen.ForceJPAClassGenerator")
-@Table(name="MyEntity__c")
-@Entity(name="MyEntity")
+@Table(name="Congregation__c")
+@Entity(name="Congregation")
 @com.force.sdk.jpa.annotation.CustomObject(readOnlySchema=true)
-public class MyEntity extends com.force.sdk.jpa.model.BaseForceCustomObject {
+public class Congregation extends com.force.sdk.jpa.model.BaseForceCustomObject {
 
-    public static final String KEY_PREFIX = "a00";
+    public static final String KEY_PREFIX = "a02";
 
 
     protected User createdBy;
     protected User lastModifiedBy;
+    protected Circuit circuit;
+    protected double number;
     
 
     @ManyToOne
@@ -54,7 +56,30 @@ public class MyEntity extends com.force.sdk.jpa.model.BaseForceCustomObject {
         this.lastModifiedBy = lastModifiedBy;
     }
     
+    @ManyToOne
+    @Basic(fetch=FetchType.LAZY)
+    @Column(name="Circuit__c")
+    public Circuit getCircuit() {
+        return this.circuit;
+    }
     
+    public void setCircuit(Circuit circuit) {
+        this.circuit = circuit;
+    }
+    
+    @Column(name="number__c")
+    public double getNumber() {
+        return this.number;
+    }
+    
+    @Basic(optional=false)
+    public void setNumber(double number) {
+        this.number = number;
+    }
+    
+    
+
+
 
 
 

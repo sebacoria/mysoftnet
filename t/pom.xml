@@ -294,6 +294,81 @@
                     </execution>
                 </executions>
             </plugin>
+
 		</plugins>
+		
+		<!-- Eclipse need it -->
+		<pluginManagement>
+			<plugins>
+				<!--This plugin's configuration is used to store Eclipse m2e settings only. It has no influence on the Maven build itself.-->
+				<plugin>
+					<groupId>org.eclipse.m2e</groupId>
+					<artifactId>lifecycle-mapping</artifactId>
+					<version>1.0.0</version>
+					<configuration>
+						<lifecycleMappingMetadata>
+							<pluginExecutions>
+								<pluginExecution>
+									<pluginExecutionFilter>
+										<groupId>com.force</groupId>
+										<artifactId>
+											maven-force-plugin
+										</artifactId>
+										<versionRange>
+											[22.0.5-BETA,)
+										</versionRange>
+										<goals>
+											<goal>codegen</goal>
+										</goals>
+									</pluginExecutionFilter>
+									<action>
+										<ignore></ignore>
+									</action>
+								</pluginExecution>
+							</pluginExecutions>
+						</lifecycleMappingMetadata>
+					</configuration>
+				</plugin>
+			</plugins>
+		</pluginManagement>
 	</build>
+
+	<profiles>
+		<profile>
+		  <id>force-codegen</id>
+		  <activation>
+		    <property>
+		      <name>forceCodeGen</name>
+		      <value>true</value>
+		    </property>
+		  </activation>
+			<build>
+				<plugins>
+						<!-- Force.com to JPA plugin -->
+						<plugin>
+						  <groupId>com.force</groupId>
+						  <artifactId>maven-force-plugin</artifactId>
+						  <version>22.0.5-BETA</version>
+						  <configuration>
+							<connectionName>connname</connectionName>
+							<destDir>${basedir}/src/main/java</destDir>
+							<packageName>org.mysoftnet.t.model</packageName>
+							<excludes>
+							    <exclude>MyEntity</exclude>
+							</excludes>			    
+						  </configuration>
+							<executions>
+							  <execution>
+							    <id>generate-force-entities</id>
+							    <goals>
+							      <goal>codegen</goal>
+							    </goals>
+							  </execution>
+							</executions>			  
+						</plugin>	
+				</plugins>
+			</build>
+		</profile>		
+	</profiles>
+	
 </project>
