@@ -54,7 +54,6 @@ public class User extends com.force.sdk.jpa.model.BaseForceObject {
     protected boolean receivesInfoEmails;
     protected boolean receivesAdminInfoEmails;
     protected EmailEncodingKeyEnum emailEncodingKey;
-    protected Profile profile;
     protected UserTypeEnum userType;
     protected LanguageLocaleKeyEnum languageLocaleKey;
     protected String employeeNumber;
@@ -308,18 +307,6 @@ public class User extends com.force.sdk.jpa.model.BaseForceObject {
     @Basic(optional=false)
     public void setEmailEncodingKey(EmailEncodingKeyEnum emailEncodingKey) {
         this.emailEncodingKey = emailEncodingKey;
-    }
-    
-    @ManyToOne
-    @Basic(fetch=FetchType.LAZY)
-    @Column(name="ProfileId")
-    public Profile getProfile() {
-        return this.profile;
-    }
-    
-    @Basic(optional=false)
-    public void setProfile(Profile profile) {
-        this.profile = profile;
     }
     
     @Enumerated(value=EnumType.STRING)
@@ -593,11 +580,11 @@ public class User extends com.force.sdk.jpa.model.BaseForceObject {
     public enum TimeZoneSidKeyEnum implements com.force.sdk.jpa.model.PicklistValueEnum {
 
         PACIFIC_KIRITIMATI(true,false,"(GMT+14:00) Line Islands Time (Pacific/Kiritimati)","Pacific/Kiritimati"),
+        PACIFIC_CHATHAM(true,false,"(GMT+13:45) Chatham Daylight Time (Pacific/Chatham)","Pacific/Chatham"),
+        PACIFIC_AUCKLAND(true,false,"(GMT+13:00) New Zealand Daylight Time (Pacific/Auckland)","Pacific/Auckland"),
         PACIFIC_ENDERBURY(true,false,"(GMT+13:00) Phoenix Islands Time (Pacific/Enderbury)","Pacific/Enderbury"),
         PACIFIC_TONGATAPU(true,false,"(GMT+13:00) Tonga Time (Pacific/Tongatapu)","Pacific/Tongatapu"),
-        PACIFIC_CHATHAM(true,false,"(GMT+12:45) Chatham Standard Time (Pacific/Chatham)","Pacific/Chatham"),
         ASIA_KAMCHATKA(true,false,"(GMT+12:00) Magadan Time (Asia/Kamchatka)","Asia/Kamchatka"),
-        PACIFIC_AUCKLAND(true,false,"(GMT+12:00) New Zealand Standard Time (Pacific/Auckland)","Pacific/Auckland"),
         PACIFIC_FIJI(true,false,"(GMT+12:00) Fiji Time (Pacific/Fiji)","Pacific/Fiji"),
         PACIFIC_NORFOLK(true,false,"(GMT+11:30) Norfolk Islands Time (Pacific/Norfolk)","Pacific/Norfolk"),
         PACIFIC_GUADALCANAL(true,false,"(GMT+11:00) Solomon Islands Time (Pacific/Guadalcanal)","Pacific/Guadalcanal"),
@@ -627,10 +614,10 @@ public class User extends com.force.sdk.jpa.model.BaseForceObject {
         ASIA_KARACHI(true,false,"(GMT+05:00) Pakistan Time (Asia/Karachi)","Asia/Karachi"),
         ASIA_TASHKENT(true,false,"(GMT+05:00) Uzbekistan Time (Asia/Tashkent)","Asia/Tashkent"),
         ASIA_KABUL(true,false,"(GMT+04:30) Afghanistan Time (Asia/Kabul)","Asia/Kabul"),
-        ASIA_TEHRAN(true,false,"(GMT+04:30) Iran Daylight Time (Asia/Tehran)","Asia/Tehran"),
         ASIA_DUBAI(true,false,"(GMT+04:00) Gulf Standard Time (Asia/Dubai)","Asia/Dubai"),
         ASIA_TBILISI(true,false,"(GMT+04:00) Georgia Time (Asia/Tbilisi)","Asia/Tbilisi"),
         EUROPE_MOSCOW(true,false,"(GMT+04:00) Moscow Standard Time (Europe/Moscow)","Europe/Moscow"),
+        ASIA_TEHRAN(true,false,"(GMT+03:30) Iran Standard Time (Asia/Tehran)","Asia/Tehran"),
         AFRICA_NAIROBI(true,false,"(GMT+03:00) East Africa Time (Africa/Nairobi)","Africa/Nairobi"),
         ASIA_BAGHDAD(true,false,"(GMT+03:00) Arabian Standard Time (Asia/Baghdad)","Asia/Baghdad"),
         ASIA_JERUSALEM(true,false,"(GMT+03:00) Israel Daylight Time (Asia/Jerusalem)","Asia/Jerusalem"),
@@ -640,7 +627,7 @@ public class User extends com.force.sdk.jpa.model.BaseForceObject {
         EUROPE_BUCHAREST(true,false,"(GMT+03:00) Eastern European Summer Time (Europe/Bucharest)","Europe/Bucharest"),
         EUROPE_HELSINKI(true,false,"(GMT+03:00) Eastern European Summer Time (Europe/Helsinki)","Europe/Helsinki"),
         EUROPE_ISTANBUL(true,false,"(GMT+03:00) Eastern European Summer Time (Europe/Istanbul)","Europe/Istanbul"),
-        EUROPE_MINSK(true,false,"(GMT+03:00) Further-Eastern European Time (Europe/Minsk)","Europe/Minsk"),
+        EUROPE_MINSK(true,false,"(GMT+03:00) Further-eastern European Time (Europe/Minsk)","Europe/Minsk"),
         AFRICA_CAIRO(true,false,"(GMT+02:00) Eastern European Time (Africa/Cairo)","Africa/Cairo"),
         AFRICA_JOHANNESBURG(true,false,"(GMT+02:00) South Africa Standard Time (Africa/Johannesburg)","Africa/Johannesburg"),
         EUROPE_AMSTERDAM(true,false,"(GMT+02:00) Central European Summer Time (Europe/Amsterdam)","Europe/Amsterdam"),
@@ -946,7 +933,6 @@ public class User extends com.force.sdk.jpa.model.BaseForceObject {
         }
     }
     
-
 
 
     /**

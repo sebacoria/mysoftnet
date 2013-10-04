@@ -28,15 +28,28 @@ public class Group extends com.force.sdk.jpa.model.BaseForceObject {
     public static final String KEY_PREFIX = "00G";
 
 
+    protected String name;
     protected UserRole relatedId;
     protected TypeEnum type;
     protected String email;
     protected boolean doesSendEmailToMembers;
     protected boolean doesIncludeBosses;
+    protected java.util.Calendar createdDate;
     protected User createdBy;
+    protected java.util.Calendar lastModifiedDate;
     protected User lastModifiedBy;
+    protected java.util.Calendar systemModstamp;
     
 
+    public String getName() {
+        return this.name;
+    }
+    
+    @Basic(optional=false)
+    public void setName(String name) {
+        this.name = name;
+    }
+    
     @ManyToOne
     @Basic(fetch=FetchType.LAZY)
     public UserRole getRelatedId() {
@@ -81,6 +94,14 @@ public class Group extends com.force.sdk.jpa.model.BaseForceObject {
         this.doesIncludeBosses = doesIncludeBosses;
     }
     
+    public java.util.Calendar getCreatedDate() {
+        return this.createdDate;
+    }
+    
+    public void setCreatedDate(java.util.Calendar createdDate) {
+        this.createdDate = createdDate;
+    }
+    
     @ManyToOne
     @Basic(fetch=FetchType.LAZY)
     @Column(name="CreatedById")
@@ -90,6 +111,15 @@ public class Group extends com.force.sdk.jpa.model.BaseForceObject {
     
     public void setCreatedBy(User createdBy) {
         this.createdBy = createdBy;
+    }
+    
+    @Version
+    public java.util.Calendar getLastModifiedDate() {
+        return this.lastModifiedDate;
+    }
+    
+    public void setLastModifiedDate(java.util.Calendar lastModifiedDate) {
+        this.lastModifiedDate = lastModifiedDate;
     }
     
     @ManyToOne
@@ -103,7 +133,16 @@ public class Group extends com.force.sdk.jpa.model.BaseForceObject {
         this.lastModifiedBy = lastModifiedBy;
     }
     
+    public java.util.Calendar getSystemModstamp() {
+        return this.systemModstamp;
+    }
     
+    public void setSystemModstamp(java.util.Calendar systemModstamp) {
+        this.systemModstamp = systemModstamp;
+    }
+    
+    
+
 
 
 
@@ -167,6 +206,9 @@ public class Group extends com.force.sdk.jpa.model.BaseForceObject {
         }
     }
     
+
+
+
 
 
 

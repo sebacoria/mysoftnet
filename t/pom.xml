@@ -2,7 +2,7 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>org.mysoftnet</groupId>
-	<version>CURRENT</version>
+	<version>1.0-SNAPSHOT</version>
 	<name>t</name>
 	<artifactId>t</artifactId>
 	<packaging>war</packaging>
@@ -226,53 +226,6 @@
 					</execution>
 				</executions>
 			</plugin>
-			<plugin>
-				<groupId>org.datanucleus</groupId>
-				<artifactId>maven-datanucleus-plugin</artifactId>
-				<version>2.1.0-release</version>
-				<dependencies>
-					<dependency>
-						<groupId>org.datanucleus</groupId>
-						<artifactId>datanucleus-core</artifactId>
-						<version>2.2.3</version>
-
-						<scope>runtime</scope>
-					</dependency>
-					<dependency>
-						<groupId>org.datanucleus</groupId>
-						<artifactId>datanucleus-enhancer</artifactId>
-						<version>2.1.0-release</version>
-						<scope>runtime</scope>
-					</dependency>
-					<dependency>
-						<groupId>org.datanucleus</groupId>
-						<artifactId>datanucleus-rdbms</artifactId>
-						<version>2.1.0-release</version>
-						<scope>runtime</scope>
-						<optional>true</optional>
-					</dependency>
-
-					<dependency>
-						<groupId>org.datanucleus</groupId>
-						<artifactId>datanucleus-jpa</artifactId>
-						<version>2.1.6</version>
-						<scope>runtime</scope>
-						<optional>true</optional>
-					</dependency>
-				</dependencies>
-				<configuration>
-					<api>JPA</api>
-					<verbose>true</verbose>
-				</configuration>
-				<executions>
-					<execution>
-						<phase>process-classes</phase>
-						<goals>
-							<goal>enhance</goal>
-						</goals>
-					</execution>
-				</executions>
-			</plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-dependency-plugin</artifactId>
@@ -294,46 +247,73 @@
                     </execution>
                 </executions>
             </plugin>
-
 		</plugins>
-		
-		<!-- Eclipse need it -->
-		<pluginManagement>
-			<plugins>
-				<!--This plugin's configuration is used to store Eclipse m2e settings only. It has no influence on the Maven build itself.-->
-				<plugin>
-					<groupId>org.eclipse.m2e</groupId>
-					<artifactId>lifecycle-mapping</artifactId>
-					<version>1.0.0</version>
-					<configuration>
-						<lifecycleMappingMetadata>
-							<pluginExecutions>
-								<pluginExecution>
-									<pluginExecutionFilter>
-										<groupId>com.force</groupId>
-										<artifactId>
-											maven-force-plugin
-										</artifactId>
-										<versionRange>
-											[22.0.5-BETA,)
-										</versionRange>
-										<goals>
-											<goal>codegen</goal>
-										</goals>
-									</pluginExecutionFilter>
-									<action>
-										<ignore></ignore>
-									</action>
-								</pluginExecution>
-							</pluginExecutions>
-						</lifecycleMappingMetadata>
-					</configuration>
-				</plugin>
-			</plugins>
-		</pluginManagement>
 	</build>
 
 	<profiles>
+		<profile>
+			<id>force-enhance</id>
+			<activation>
+			  <property>
+			    <name>forceEnhance</name>
+			    <value>true</value>
+			  </property>
+			</activation>
+			<build>
+				<plugins>
+					<plugin>
+						<groupId>org.datanucleus</groupId>
+						<artifactId>maven-datanucleus-plugin</artifactId>
+						<version>2.1.0-release</version>
+						<dependencies>
+							<dependency>
+								<groupId>org.datanucleus</groupId>
+								<artifactId>datanucleus-core</artifactId>
+								<version>2.2.3</version>
+		
+								<scope>runtime</scope>
+							</dependency>
+							<dependency>
+								<groupId>org.datanucleus</groupId>
+								<artifactId>datanucleus-enhancer</artifactId>
+								<version>2.1.0-release</version>
+								<scope>runtime</scope>
+							</dependency>
+							<dependency>
+								<groupId>org.datanucleus</groupId>
+								<artifactId>datanucleus-rdbms</artifactId>
+								<version>2.1.0-release</version>
+								<scope>runtime</scope>
+								<optional>true</optional>
+							</dependency>
+		
+							<dependency>
+								<groupId>org.datanucleus</groupId>
+								<artifactId>datanucleus-jpa</artifactId>
+								<version>2.1.6</version>
+								<scope>runtime</scope>
+								<optional>true</optional>
+							</dependency>
+						</dependencies>
+						<configuration>
+							<api>JPA</api>
+							<verbose>true</verbose>
+					        <fork>false</fork>
+					        <mappingIncludes>org/mysoftnet/t/model/*.class</mappingIncludes>							
+						</configuration>
+						<executions>
+							<execution>
+								<phase>process-classes</phase>
+								<goals>
+									<goal>enhance</goal>
+								</goals>
+							</execution>
+						</executions>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
+
 		<profile>
 		  <id>force-codegen</id>
 		  <activation>
@@ -353,9 +333,30 @@
 							<connectionName>connname</connectionName>
 							<destDir>${basedir}/src/main/java</destDir>
 							<packageName>org.mysoftnet.t.model</packageName>
+							<all>false</all>
+							<followReferences>false</followReferences>
 							<excludes>
-							    <exclude>MyEntity</exclude>
-							</excludes>			    
+								<<exclude>*history</exclude>
+							</excludes>
+							<includes>
+								<include>Circuit</include>
+								<include>CircuitPersonAssigment</include>
+								<include>Congregation</include>
+								<include>CongregationPersonAssigment</include>
+								<include>ContactInformation</include>
+								<include>Group</include>
+								<include>GroupMember</include>
+								<include>Map</include>
+								<include>MapArea</include>
+								<include>MapAreaPoint</include>
+								<include>MapLocation</include>
+								<include>MyEntity</include>
+								<include>Person</include>
+								<include>PersonType</include>
+								<include>Territory</include>
+								<include>User</include>
+								<include>UserRole</include>						
+							</includes>			    
 						  </configuration>
 							<executions>
 							  <execution>
