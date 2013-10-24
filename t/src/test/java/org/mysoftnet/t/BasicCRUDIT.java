@@ -12,8 +12,9 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import com.force.sdk.connector.ForceServiceConnector;
+
+import org.mysoftnet.t.dao.EntityDao;
 import org.mysoftnet.t.model.MyEntity;
-import org.mysoftnet.t.service.EntityService;
 import com.sforce.ws.ConnectionException;
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -21,7 +22,7 @@ import com.sforce.ws.ConnectionException;
 public class BasicCRUDIT {
 
 	@Inject
-	private EntityService entityService;
+	private EntityDao entityService;
 	
 	@Inject
 	private ForceServiceConnector connector;

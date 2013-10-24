@@ -8,7 +8,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import org.mysoftnet.t.service.EntityService;
+import org.mysoftnet.t.dao.EntityDao;
 
 /**
  * Handles requests for the application home page.
@@ -19,7 +19,7 @@ public class HomeController {
 	private static final Logger logger = LoggerFactory.getLogger(HomeController.class);
 
 	@Inject
-	EntityService entityService;
+	EntityDao entityService;
 	
 	/**
 	 * Simply selects the home view to render by returning its name.

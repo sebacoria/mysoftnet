@@ -11,8 +11,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
+import org.mysoftnet.t.dao.EntityDao;
+import org.mysoftnet.t.dao.exception.DaoException;
 import org.mysoftnet.t.model.MyEntity;
-import org.mysoftnet.t.service.EntityService;
 
 /**
  * Handles requests for the application home page.
@@ -23,10 +24,10 @@ public class EntityController {
 	private static final Logger logger = LoggerFactory.getLogger(EntityController.class);
 
 	@Inject
-	EntityService entityService;
+	EntityDao entityService;
 	
 	@ModelAttribute("entity")
-	public MyEntity init(@PathVariable String id) {
+	public MyEntity init(@PathVariable String id) throws DaoException {
 		return entityService.findEntity(id);
 	}
 	
@@ -39,7 +40,7 @@ public class EntityController {
 	}
 
 	@RequestMapping(value="/myentity/{id}", method=RequestMethod.POST)
-	public String update(ModelAndView mv, @ModelAttribute("entity") MyEntity entity) {
+	public String update(ModelAndView mv, @ModelAttribute("entity") MyEntity entity) throws DaoException {
 	    	logger.info("updating /myentity");
 		return "redirect:/myentity/"+entityService.save(entity).getId();
 	}
