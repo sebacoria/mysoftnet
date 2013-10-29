@@ -2,11 +2,9 @@ package org.mysoftnet.t.controller;
 
 import javax.inject.Inject;
 
-import org.mysoftnet.t.dao.CongregationDao;
-import org.mysoftnet.t.dao.EntityDao;
 import org.mysoftnet.t.dao.exception.DaoException;
+import org.mysoftnet.t.dao.interfaces.ICongregationDao;
 import org.mysoftnet.t.model.Congregation;
-import org.mysoftnet.t.model.MyEntity;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -25,7 +23,7 @@ public class CongregationController {
 	private static final Logger logger = LoggerFactory.getLogger(CongregationController.class);
 
 	@Inject
-	CongregationDao congregationService;
+	ICongregationDao congregationService;
 	
 	@ModelAttribute("congregation")
 	public Congregation init(@PathVariable String id) throws DaoException {

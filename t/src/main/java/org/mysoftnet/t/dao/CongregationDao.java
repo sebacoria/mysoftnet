@@ -5,9 +5,7 @@
  */
 package org.mysoftnet.t.dao;
 
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
-
+import org.mysoftnet.t.dao.interfaces.ICongregationDao;
 import org.mysoftnet.t.model.Congregation;
 import org.springframework.stereotype.Service;
 
@@ -17,12 +15,5 @@ import org.springframework.stereotype.Service;
  *
  */
 @Service
-public class CongregationDao extends GenericDao<Congregation, String> {
-	@PersistenceContext
-	EntityManager em;
-
-	public void setEntityManager(EntityManager em) {
-		this.em = em;
-	}
-
+public class CongregationDao extends GenericDao<Congregation, String> implements ICongregationDao {
 }

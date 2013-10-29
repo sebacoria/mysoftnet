@@ -6,15 +6,6 @@
 package org.mysoftnet.t.dao;
 
 import java.io.Serializable;
-
-import org.mysoftnet.t.dao.exception.EntityNotFoundException;
-import org.mysoftnet.t.dao.exception.DaoException;
-import org.mysoftnet.t.dao.interfaces.IDao;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 import java.util.List;
@@ -26,6 +17,13 @@ import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 
+import org.mysoftnet.t.dao.exception.DaoException;
+import org.mysoftnet.t.dao.exception.EntityNotFoundException;
+import org.mysoftnet.t.dao.interfaces.IDao;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.transaction.annotation.Transactional;
+
 
 
 /**
@@ -35,8 +33,7 @@ import javax.persistence.criteria.Root;
  * @param <T> the generic type
  * @param <K> the key type
  */
-@Service
-public class GenericDao<T, K extends Serializable> implements IDao<T, K> {
+public class GenericDao<T extends com.force.sdk.jpa.model.BaseForceCustomObject, K extends Serializable> implements IDao<T, K> {
 
 	/** The Constant logger. */
 	private static Logger logger;
@@ -90,7 +87,10 @@ public class GenericDao<T, K extends Serializable> implements IDao<T, K> {
 		    CriteriaQuery<T> cq = builder.createQuery(type);
 		    Root<T> variableRoot = cq.from(type);
 		    cq.select(variableRoot);
+		    cq.orderBy(builder.asc(variableRoot.get("id")));
+
 		    Query query = em.createQuery(cq);
+
 		    query.setFirstResult(0);
 		    query.setMaxResults(1);
 		    List<T> entities = (List<T>) query.getResultList();
@@ -110,15 +110,16 @@ public class GenericDao<T, K extends Serializable> implements IDao<T, K> {
 	@Transactional
 	public T save(T entity) throws DaoException {
 		try {
-			entity = em.merge(entity);
-		} catch (Exception e) {
-			try {
+			if (entity.getId() != null) {
+				entity = em.merge(entity);
+			} else {
 				em.persist(entity);
-			} catch (Exception e1) {
-				logger.error(e1.getMessage());
-				throw new DaoException(e1);
 			}
-		}	
+		} catch (Exception e) {
+				logger.error(e.getMessage());
+				throw new DaoException(e);
+		}
+		
 		return entity;
 	}
 	
@@ -143,7 +144,8 @@ public class GenericDao<T, K extends Serializable> implements IDao<T, K> {
 	@Transactional
 	public void delete(T entity) throws DaoException {
 		try {
-			em.remove(entity);
+			T removeEntity = (T) em.find(type,entity.getId());
+			em.remove(removeEntity);
 		} catch (Exception e) {
 			logger.error(e.getMessage());
 			throw new DaoException(e);

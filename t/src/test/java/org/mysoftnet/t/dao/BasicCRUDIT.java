@@ -1,4 +1,4 @@
-package org.mysoftnet.t;
+package org.mysoftnet.t.dao;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
@@ -27,7 +27,7 @@ public class BasicCRUDIT {
 	@Inject
 	private ForceServiceConnector connector;
 	
-	@Test
+//	@Test
 	public void testEntityCRUD() {
 		
 		String entityId = null;
