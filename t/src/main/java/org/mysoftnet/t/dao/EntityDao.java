@@ -1,4 +1,4 @@
-package org.mysoftnet.t.service;
+package org.mysoftnet.t.dao;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -11,9 +11,9 @@ import org.springframework.transaction.annotation.Transactional;
 import org.mysoftnet.t.model.MyEntity;
 
 @Service
-public class EntityService {
+public class EntityDao {
 	
-	private static final Logger logger = LoggerFactory.getLogger(EntityService.class);
+	private static final Logger logger = LoggerFactory.getLogger(EntityDao.class);
 	
 	@PersistenceContext
 	EntityManager em;

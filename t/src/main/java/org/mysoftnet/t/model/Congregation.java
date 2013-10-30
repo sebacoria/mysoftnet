@@ -32,6 +32,7 @@ public class Congregation extends com.force.sdk.jpa.model.BaseForceCustomObject 
     protected User lastModifiedBy;
     protected Circuit circuit;
     protected double number;
+    protected String congregationName;
     
 
     @ManyToOne
@@ -77,7 +78,15 @@ public class Congregation extends com.force.sdk.jpa.model.BaseForceCustomObject 
         this.number = number;
     }
     
+    @Column(name="congregation_name__c")
+    public String getCongregationName() {
+        return this.congregationName;
+    }
     
+    @Basic(optional=false)
+    public void setCongregationName(String congregationName) {
+        this.congregationName = congregationName;
+    }    
 
 
 
