@@ -12,14 +12,14 @@ body {
 #header {
 	width:950px;
 	height:129px;
-	background:url(header.png);
+/* 	background:url(header.png); */
 }
 
 #app_title {
-	position: relative;
+	position: center;
 	left: 580px;
 	top: 85px;
-	width: 270px;
+	width: 400px;
 	font-family: sans-serif;
 	font-family: 'arial rounded MT bold';
 	font-size: 18pt;

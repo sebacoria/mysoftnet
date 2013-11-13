@@ -4,10 +4,11 @@
 	  * www.the-di-lab.com
 	  * 22.06.2010
 	  */
-	 function PolygonCreator(map){
+	 function PolygonCreator(map, urlPolygonClickAction){
 	 	 //create pen to draw on map
 		 this.map = map;
-		 this.pen = new Pen(this.map);
+		 		 
+		 this.pen = new Pen(this.map, urlPolygonClickAction);
 		 var thisOjb=this;
 		 this.event=google.maps.event.addListener(thisOjb.map, 'click', function(event) { 
 					thisOjb.pen.draw(event.latLng);
@@ -33,12 +34,13 @@
 	 /*
 	  * pen class
 	  */
-	 function Pen(map){
+	 function Pen(map, urlPolygonClickAction){
 	 	this.map= map;
 	 	this.listOfDots = new Array();
 		this.polyline =null;
 		this.polygon = null;
 		this.currentDot = null;
+		this.urlPolygonClickAction = urlPolygonClickAction;
 		//draw function
 		this.draw = function(latLng){
 			if (null != this.polygon) {
@@ -199,8 +201,6 @@
 		this.parent = pen;
 		this.des = 'Hello';
 		
-		
-		
 		var thisObj=this;
 		$.each(this.listOfDots,function(index,value){
 			thisObj.coords.push(value.getLatLng());
@@ -255,14 +255,20 @@
 		
 		
 		this.info = new Info(this,this.map);
+		this.clickAction = new ClickAction(this,this.map,pen.urlPolygonClickAction);
 		
 		//closure		
 		this.addListener = function(){
 				var info=this.info;
+				var clickAction=this.clickAction;
 				var thisPolygon=this.polygonObj;
 				google.maps.event.addListener(thisPolygon, 'rightclick', function(event) { 					
 				    info.show(event.latLng);
-				});				
+				});
+				
+				google.maps.event.addListener(thisPolygon, 'click', function(event) { 					
+					clickAction.show(event.latLng);
+				});
 		}	
 		this.addListener();
 							  
@@ -307,6 +313,41 @@
 		this.infoWidObj = new google.maps.InfoWindow({
 				    content:thisObj.getContent()
 		});
+		
+		this.show = function(latLng){
+			this.infoWidObj.setPosition(latLng);
+			this.infoWidObj.open(this.map);
+		}
+		
+		this.remove = function(){
+	 		this.infoWidObj.close();
+	 	}
+		
+		
+	 }
+	 
+	 /*
+	  * Child of Polygon class
+	  * clickAction Class
+	  */
+	 function ClickAction(polygon,map,url){
+	 	this.parent = polygon;
+		this.map = map;
+		this.url = url;
+		
+		//get content
+		this.getContent = function(){
+			var url = this.url;
+			var content = document.createElement('div');
+			content.id = 'polygon_info_window_click_action';
+			$(content).load(url);
+			return content;
+		}
+		
+		thisObj=this;
+		this.infoWidObj = new google.maps.InfoWindow({
+				    content:thisObj.getContent()
+		});0
 		
 		this.show = function(latLng){
 			this.infoWidObj.setPosition(latLng);

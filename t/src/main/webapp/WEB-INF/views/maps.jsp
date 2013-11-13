@@ -11,7 +11,7 @@
 	
 	<script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=false"></script>
 	<script type="text/javascript" src="${pageContext.request.contextPath}/resources/jquery-1.10.2.min.js"></script>
-	<script type="text/javascript" src="${pageContext.request.contextPath}/resources/polygon.min.js"></script>
+	<script type="text/javascript" src="${pageContext.request.contextPath}/resources/polygon.js"></script>
 	
 	<script type="text/javascript">
 	$(function(){
@@ -19,13 +19,13 @@
 
 		 var myOptions = {
 		  	zoom: 16,
-		  	center: new google.maps.LatLng(-32.938646,-60.679658),
+		  	center: new google.maps.LatLng(-32.938646,-60.679658), 
 		  	mapTypeId: google.maps.MapTypeId.ROADMAP
 		  }
 		 map = new google.maps.Map(document.getElementById('main-map'), myOptions);
 		 
-		 var creator = new PolygonCreator(map);
-		 
+		 var creator = new PolygonCreator(map, 'maps/territory/new');
+
 		 //reset
 		 $('#reset').click(function(){ 
 		 		creator.destroy();
@@ -57,12 +57,9 @@
 	});	
 	</script>
 </head>
+
 <body>
-
-
-
 	<div id="header">
-
 	   <p>
 		<span class="instruction">Instruction:</span>
 		Left click on the map to create markers, when last marker meets first marker, it will form a polygon.

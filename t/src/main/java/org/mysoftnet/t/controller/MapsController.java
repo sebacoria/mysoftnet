@@ -5,9 +5,6 @@
  */
 package org.mysoftnet.t.controller;
 
-import javax.inject.Inject;
-
-import org.mysoftnet.t.dao.EntityDao;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -23,9 +20,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 public class MapsController {
 	private static final Logger logger = LoggerFactory.getLogger(HomeController.class);
 
-	@Inject
-	EntityDao entityService;
-	
 	/**
 	 * Simply selects the home view to render by returning its name.
 	 */
@@ -34,6 +28,5 @@ public class MapsController {
 	    	logger.info("requesting maps");
 		return "maps";
 	}
-
 
 }
